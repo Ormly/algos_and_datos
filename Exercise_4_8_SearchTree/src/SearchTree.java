@@ -255,46 +255,20 @@ public class SearchTree {
 		//build sorted lists using toList()
 		ArrayList<Integer> arrCurr = new ArrayList<Integer>(toList());
 		ArrayList<Integer> arrOther = new ArrayList<Integer>(other.toList());
+		int currSize = arrCurr.size();
 
 		//case list lengths differ -> can't be equal
-		if(arrCurr.size() != arrOther.size())
+		if(currSize != arrOther.size())
 			return false;
 		else
 		{
-			//check for every value in first list if it's contained in second list using binary search (since both lists are sorted)
-			for(int value : arrCurr)
-				if(!binaryContains(value,arrOther)) return false;
+			//seems too inefficient
+			for(int i = 0; i < currSize; i++)
+				if(!arrCurr.get(i).equals(arrOther.get(i)))
+					return false;
 		}
 
 		//all values in arrCurr found in arrOther -> lists identical
 		return true;
-	}
-
-	//binary search, iteratively implemented
-	public boolean binaryContains(int toFind, ArrayList<Integer> arr)
-	{
-		int low = 0;
-		int high = arr.size()-1;
-		int mid;
-
-		while(low <= high)
-		{
-			mid = low + (high - low) / 2;
-
-			//sought value smaller than current mid point -> search in smaller half
-			if(arr.get(mid) < toFind)
-				low = mid + 1;
-
-			//sought value larger than current mid point -> search larger half
-			else if(arr.get(mid) > toFind) 
-				high = mid - 1;
-
-			//value = current midpoint -> successful search
-			else
-				return true;
-		}
-
-		//unsuccessful search
-		return false;
 	}
 }
